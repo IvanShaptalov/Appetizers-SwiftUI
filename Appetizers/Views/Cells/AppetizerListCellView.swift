@@ -12,15 +12,14 @@ struct AppetizerListCellView: View {
     
     var body: some View {
         HStack{
-            Image(appetizer.imageURL)
-                .resizable()
+            AppetizerRemoteImage(urlString: appetizer.imageURL)
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 120, height: 90)
                 .clipShape(.rect(cornerRadius: 10))
             
             VStack (alignment: .leading, spacing: 5){
                 Text(appetizer.name)
-                    .font(.title2)
+                    .font(.title3)
                     .fontWeight(.medium)
                     .lineLimit(2)
                 Text("$\(appetizer.price, specifier: "%.2f")")

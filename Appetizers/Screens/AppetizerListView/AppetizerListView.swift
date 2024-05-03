@@ -11,17 +11,27 @@ struct AppetizerListView: View {
     
     @StateObject var viewModel = AppetizerListViewModel()
     var body: some View {
-        NavigationView {
-            List(viewModel.appetizers) {
-                appetizer in
-                AppetizerListCellView(appetizer: appetizer)
+        ZStack {
+            NavigationView {
+                List(viewModel.appetizers) {
+                    appetizer in
+                    AppetizerListCellView(appetizer: appetizer)
+                }
+                .navigationTitle("🍟 Appetizers")
+                
             }
-            .navigationTitle("🍟 Appetizers")
-        }
-        .onAppear {
-            viewModel.getAppetizers()
-        }
-        .alert(item: $viewModel.alertItem) { alert in
+            .onAppear {
+                viewModel.getAppetizers()
+            }
+            
+            if viewModel.isLoading {
+                ProgressView()
+                    .progressViewStyle(.circular)
+                    .tint(.brandPrimary)
+                    .controlSize(.large)
+            }
+            
+        }.alert(item: $viewModel.alertItem) { alert in
             Alert(title: alert.title, message: alert.message, dismissButton: alert.dismissButton)
         }
     }
